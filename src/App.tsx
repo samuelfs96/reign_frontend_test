@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Header from "./components/Header";
+import Select from "./components/Select";
 import Tabs from "./components/Tabs";
+import { useLocalStorage } from './hooks/useLocalStorage'
 
 
 function App() {
 
   const [tabValue, setTabValue] = useState('')
+  const [selectValue, setSelectValue] = useLocalStorage('selectValue', '')
 
   return (
     <>
@@ -20,6 +23,13 @@ function App() {
         value={tabValue}
         setValue={setTabValue}
       />
+      <div style={{marginTop: '45px'}}>
+        <Select 
+          className="dropdown"
+          value={selectValue}
+          setSelectValue={setSelectValue}
+        />
+      </div>
     </div>
 
     </>
