@@ -33,6 +33,7 @@ function App() {
         <div className="wrap" style={{marginTop: '45px'}}>
           <Box 
             className="box"
+            id="1"
             author='DeathArrow'
             title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
             url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
@@ -40,6 +41,7 @@ function App() {
           />
           <Box 
             className="box"
+            id="2"
             author='DeathArrow'
             title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
             url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
@@ -47,6 +49,7 @@ function App() {
           />
           <Box 
             className="box"
+            id="3"
             author='DeathArrow'
             title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
             url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
@@ -54,6 +57,7 @@ function App() {
           />
           <Box 
             className="box"
+            id="4"
             author='DeathArrow'
             title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
             url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
