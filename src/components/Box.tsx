@@ -29,8 +29,10 @@ const Box = ({
   return (
     <div className={className}>
       <div className="comment-box">
-        <img src={timeIcon} alt="img" />
-        <span>{getTimeAgo(created_at)} ago by {author}</span>
+        <div className="align-items-center">
+          <img src={timeIcon} alt="img" />
+          <span>{getTimeAgo(created_at)} ago by {author}</span>
+        </div>
         <p>
           {title}
         </p>
