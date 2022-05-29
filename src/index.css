@@ -15,6 +15,12 @@ body {
   padding: 0 10%;
 }
 
+.wrap{
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+}
+
 /*Components*/
 
 .header{
@@ -125,4 +131,63 @@ body {
 
 .dropdown:hover .dropbtn {
   opacity: 0.7;
+}
+
+.box{
+  width: 48%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  background-color: #fff;
+  font-family: 'Roboto', sans-serif;
+  color: #6b6b6b;
+  transition: .3s all ease;
+  margin-bottom: 3.33%;
+  position: relative;
+  overflow: hidden;
+}
+
+.box:hover{
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.box span{
+  font-size: 13px;
+  margin-left: 5px
+}
+
+.box p{
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  margin-top: .5rem;
+  margin-bottom: 0;
+}
+
+.box .comment-box{
+  padding: 1rem 1.75rem;
+  margin-right: 15%;
+}
+
+.box .fav-box{
+  background-color: rgb(96 96 96 / 10%);
+  position: absolute;
+  right: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+}
+
+/*Responsive*/
+
+@media (max-width: 760px) {
+
+.box{
+  width: 100%;
+}
+
 }
