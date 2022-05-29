@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "./components/Box";
 import Header from "./components/Header";
 import Pagination from "./components/Pagination";
 import Select from "./components/Select";
 import Tabs from "./components/Tabs";
 import { useLocalStorage } from './hooks/useLocalStorage'
+import apiService from './utils/services/api'
+import postsTyped from "./utils/data/posts";
+import { Post } from "./utils/types/Post";
+
 
 
 function App() {
@@ -12,6 +16,17 @@ function App() {
   const [tabValue, setTabValue] = useState('')
   const [selectValue, setSelectValue] = useLocalStorage('selectValue', '')
   const [currentPage, setCurrentPage] = useState(1)
+
+  const [posts, setPosts] = useState<Post[]>([])
+  const [favPosts, setFavPosts] = useLocalStorage('favPosts', [])
+
+  useEffect(() => {
+    if(selectValue)
+      apiService.getPosts(`?query=${selectValue}&page=0`).then(({hits}) => {
+      const _posts = postsTyped(hits)
+      setPosts(_posts)
+      })
+  }, [selectValue])
 
   return (
     <>
@@ -33,38 +48,22 @@ function App() {
           setSelectValue={setSelectValue}
         />
         <div className="wrap" style={{marginTop: '45px'}}>
-          <Box 
-            className="box"
-            id="1"
-            author='DeathArrow'
-            title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
-            url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
-            created_at='2022-05-29T06:16:11.000Z'
-          />
-          <Box 
-            className="box"
-            id="2"
-            author='DeathArrow'
-            title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
-            url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
-            created_at='2022-05-29T06:16:11.000Z'
-          />
-          <Box 
-            className="box"
-            id="3"
-            author='DeathArrow'
-            title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
-            url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
-            created_at='2022-05-29T06:16:11.000Z'
-          />
-          <Box 
-            className="box"
-            id="4"
-            author='DeathArrow'
-            title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
-            url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
-            created_at='2022-05-29T06:16:11.000Z'
-          />
+          {
+            posts.map((post, key) => (
+              <Box 
+                key={key}
+                className="box"
+                id={post.id}
+                author={post.author}
+                title={post.title}
+                url={post.url}
+                created_at={post.created_at}
+                favPosts={favPosts}
+                setFavPosts={setFavPosts}
+                isFav={favPosts.find((el: any) => el.id === post.id)?.isFav}
+              />
+            ))
+          }
         </div>
         <div className="center-elements" style={{marginTop: '45px'}}>
           <Pagination

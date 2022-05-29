@@ -2,15 +2,17 @@ import timeIcon from '../icons/time-icon.svg'
 import heartIcon from '../icons/heart-icon.svg'
 import heartIconOutlined from '../icons/heart-icon-outlined.svg'
 import getTimeAgo from '../utils/helpers/getTimeAgo'
-import { useLocalStorage } from '../hooks/useLocalStorage'
 
 interface Props {
   className?: string,
-  id: string,
+  id: number,
   author: string,
   title: string
   url: string,
   created_at: string
+  favPosts: []
+  setFavPosts: any
+  isFav: any
 }
 
 const Box = ({
@@ -19,16 +21,33 @@ const Box = ({
   author,
   title,
   url,
-  created_at 
+  created_at,
+  favPosts,
+  setFavPosts,
+  isFav
 }: Props) => {
 
-  const [fav, setFav] = useLocalStorage(`fav-${id}`, '')
+  const handleFav = () => {
+    const _favPosts: Array<any> = [...favPosts]
+    const findPost = _favPosts.find(post => post.id === id)
+    if(findPost){
+      findPost.isFav = !isFav
+    }else{
+      _favPosts.push({
+        id: id,
+        isFav: !isFav
+      })
+    }
+    setFavPosts(_favPosts)
+  }
 
-  const handleFav = () => setFav(!fav)
+  const hadleOpenUrl = () => {
+    window.open(url, "_blank")
+  }
 
   return (
     <div className={className}>
-      <div className="comment-box">
+      <div className="comment-box" onClick={hadleOpenUrl}>
         <div className="align-items-center">
           <img src={timeIcon} alt="img" />
           <span>{getTimeAgo(created_at)} ago by {author}</span>
@@ -38,7 +57,7 @@ const Box = ({
         </p>
       </div>
       <div className='fav-box' onClick={handleFav}>
-        <img src={fav ? heartIcon : heartIconOutlined} alt="img" />
+        <img src={isFav ? heartIcon : heartIconOutlined} alt="img" />
       </div>
     </div>
   )
