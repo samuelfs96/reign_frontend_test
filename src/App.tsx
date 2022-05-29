@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Box from "./components/Box";
 import Header from "./components/Header";
+import Pagination from "./components/Pagination";
 import Select from "./components/Select";
 import Tabs from "./components/Tabs";
 import { useLocalStorage } from './hooks/useLocalStorage'
@@ -10,6 +11,7 @@ function App() {
 
   const [tabValue, setTabValue] = useState('')
   const [selectValue, setSelectValue] = useLocalStorage('selectValue', '')
+  const [currentPage, setCurrentPage] = useState(1)
 
   return (
     <>
@@ -62,6 +64,14 @@ function App() {
             title='Uber and Lyft’s new road: Fewer drivers, thrifty riders and jittery investors'
             url='https://www.wsj.com/articles/uber-and-lyfts-new-road-fewer-drivers-thrifty-riders-and-jittery-investors-11653651912?mod=hp_lead_pos6'
             created_at='2022-05-29T06:16:11.000Z'
+          />
+        </div>
+        <div className="center-elements" style={{marginTop: '45px'}}>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={80}
+            pageSize={4}
+            onPageChange={(page: number) => setCurrentPage(page)}
           />
         </div>
       </div>
