@@ -27,3 +27,36 @@ body {
   color: #3b3b3b;
   font-size: 20px;
 }
+
+.tabs{
+  text-align: center;
+}
+
+.tabs button{
+  border-radius: 5px;
+  border: solid 1px #d6d6d6;
+  padding: .5% 3.75%;
+  line-height: 1.75;
+  background-color: transparent;
+  color: #606060;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tabs button:nth-child(1){
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.tabs button:nth-child(2){
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.tabs button.active{
+  color: #1797ff;
+  border-color: #1797ff;
+}
