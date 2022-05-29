@@ -22,11 +22,19 @@ function App() {
 
   useEffect(() => {
     if(selectValue)
-      apiService.getPosts(`?query=${selectValue}&page=0`).then(({hits}) => {
+      apiService.getPosts(`?query=${selectValue}&page=0&hitsPerPage=8`).then(({hits}) => {
       const _posts = postsTyped(hits)
       setPosts(_posts)
       })
   }, [selectValue])
+
+  const handleChangePage = (page: number) => {
+    apiService.getPosts(`?query=${selectValue}&page=${page}&hitsPerPage=8`).then(({hits}) => {
+      const _posts = postsTyped(hits)
+      setPosts(_posts)
+      setCurrentPage(page)
+    })
+  }
 
   return (
     <>
@@ -49,28 +57,30 @@ function App() {
         />
         <div className="wrap" style={{marginTop: '45px'}}>
           {
-            posts.map((post, key) => (
-              <Box 
-                key={key}
-                className="box"
-                id={post.id}
-                author={post.author}
-                title={post.title}
-                url={post.url}
-                created_at={post.created_at}
-                favPosts={favPosts}
-                setFavPosts={setFavPosts}
-                isFav={favPosts.find((el: any) => el.id === post.id)?.isFav}
-              />
-            ))
+            posts.map(({id, author, title, url, created_at}, key) => {
+                return (
+                  <Box 
+                      key={key}
+                      className="box"
+                      id={id}
+                      author={author}
+                      title={title}
+                      url={url}
+                      created_at={created_at}
+                      favPosts={favPosts}
+                      setFavPosts={setFavPosts}
+                      isFav={favPosts.find((el: any) => el.id === id)?.isFav}
+                    />
+                )
+            })
           }
         </div>
         <div className="center-elements" style={{marginTop: '45px'}}>
           <Pagination
             currentPage={currentPage}
-            totalCount={80}
-            pageSize={4}
-            onPageChange={(page: number) => setCurrentPage(page)}
+            totalCount={posts?.length || 0}
+            pageSize={1}
+            onPageChange={handleChangePage}
           />
         </div>
       </div>
