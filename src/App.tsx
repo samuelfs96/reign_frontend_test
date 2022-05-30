@@ -15,7 +15,7 @@ import Loader from "./components/Loader";
 function App() {
 
   const [isLoading, setIsLoading] = useState(false)
-  const [tabValue, setTabValue] = useState('')
+  const [tabValue, setTabValue] = useState('all')
   const [selectValue, setSelectValue] = useLocalStorage('selectValue', '')
   const [currentPage, setCurrentPage] = useState(1)
 

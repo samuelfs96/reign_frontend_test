@@ -2,6 +2,7 @@ import angular_logo from '../icons/angular-icon.png'
 import react_logo from '../icons/react-icon.png'
 import vue_logo from '../icons/vue-icon.png'
 import arrow_down from '../icons/arrow_down.png'
+import { useState } from 'react'
 
 interface Props {
   className?: string,
@@ -15,8 +16,11 @@ const Select = ({
   setSelectValue
 }: Props) => {
 
+  const [active, setActive] = useState(false)
+
   const handleChange = (value: string) => {
     setSelectValue(value)
+    setActive(false)
   }
 
   const renderSelectedOption = (): JSX.Element => {
@@ -34,9 +38,9 @@ const Select = ({
   }
 
   return (
-    <div className={className}>
+    <div className={className} onMouseOver={() => setActive(false) }>
       <button className="dropbtn">{renderSelectedOption()}</button>
-      <div className="dropdown-content">
+      <div className={`dropdown-content${active ? ' active-drpwn' : ''}`}>
         <div onClick={() => handleChange('angular')}>
          <img src={angular_logo} alt="img" />
          <span>Angular</span>
