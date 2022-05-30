@@ -8,11 +8,13 @@ import { useLocalStorage } from './hooks/useLocalStorage'
 import apiService from './utils/services/api'
 import postsTyped from "./utils/data/posts";
 import { Post } from "./utils/types/Post";
+import Loader from "./components/Loader";
 
 
 
 function App() {
 
+  const [isLoading, setIsLoading] = useState(false)
   const [tabValue, setTabValue] = useState('')
   const [selectValue, setSelectValue] = useLocalStorage('selectValue', '')
   const [currentPage, setCurrentPage] = useState(1)
@@ -21,24 +23,33 @@ function App() {
   const [favPosts, setFavPosts] = useLocalStorage('favPosts', [])
 
   useEffect(() => {
-    if(selectValue)
-      apiService.getPosts(`?query=${selectValue}&page=0&hitsPerPage=8`).then(({hits}) => {
-      const _posts = postsTyped(hits)
-      setPosts(_posts)
-      })
+    if(selectValue){
+      setIsLoading(true)
+      apiService.getPosts(`?query=${selectValue}&page=1&hitsPerPage=8`).then(({hits}) => {
+        setCurrentPage(1)
+        const _posts = postsTyped(hits)
+        setPosts(_posts)
+      }).finally(() => setIsLoading(false))
+    }
   }, [selectValue])
 
   const handleChangePage = (page: number) => {
+    setIsLoading(true)
     apiService.getPosts(`?query=${selectValue}&page=${page}&hitsPerPage=8`).then(({hits}) => {
       const _posts = postsTyped(hits)
       setPosts(_posts)
       setCurrentPage(page)
-    })
+    }).finally(() => setIsLoading(false))
   }
 
   return (
     <>
-    
+    {
+      isLoading && (
+        <Loader />
+      )
+    }
+
     <Header className="header">
         <p className="m-0">HACKER NEWS</p>
     </Header>
